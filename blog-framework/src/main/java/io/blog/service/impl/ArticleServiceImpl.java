@@ -22,7 +22,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // not need to care about logic delete, coz setting in application.yml
         // descend less than 10 articles
         // must formal articles, not need draft
-        queryWrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLIC); // use Article method to select
+        queryWrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLISH); // use Article method to select
         // order by view count
         queryWrapper.orderByDesc(Article::getViewCount);
         // search for 10 article
