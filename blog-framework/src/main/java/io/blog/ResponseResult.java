@@ -1,4 +1,4 @@
-package io.blog.domain;
+package io.blog;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.blog.enums.AppHttpCodeEnum;

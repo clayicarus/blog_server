@@ -3,18 +3,15 @@ package io.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import io.blog.constant.Constant;
-import io.blog.domain.ResponseResult;
-import io.blog.domain.entity.Article;
-import io.blog.domain.vo.HotArticleVo;
+import io.blog.ResponseResult;
+import io.blog.entity.Article;
+import io.blog.vo.HotArticleVo;
 import io.blog.mapper.ArticleMapper;
 import io.blog.service.ArticleService;
 import io.blog.utils.BeanCopyUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

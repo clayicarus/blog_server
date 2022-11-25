@@ -1,4 +1,4 @@
-package io.blog.domain.vo;
+package io.blog.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

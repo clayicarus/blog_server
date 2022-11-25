@@ -1,6 +1,6 @@
 package io.blog.controller;
 
-import io.blog.domain.ResponseResult;
+import io.blog.ResponseResult;
 import io.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

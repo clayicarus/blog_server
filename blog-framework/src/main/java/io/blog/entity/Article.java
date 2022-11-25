@@ -1,4 +1,4 @@
-package io.blog.domain.entity;
+package io.blog.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
