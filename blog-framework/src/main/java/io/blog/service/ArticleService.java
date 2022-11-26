@@ -6,4 +6,8 @@ import io.blog.entity.Article;
 
 public interface ArticleService extends IService<Article> {
     ResponseResult hotArticleList();    // interface declare here, implement in Impl
+
+    ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId);
+
+    ResponseResult getArticleDetail(Long id);
 }

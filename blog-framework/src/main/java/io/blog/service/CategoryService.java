@@ -12,7 +12,6 @@ import io.blog.entity.Category;
  * @since 2022-11-25 11:40:14
  */
 public interface CategoryService extends IService<Category> {
-
     ResponseResult getCategoryList();
 }
 

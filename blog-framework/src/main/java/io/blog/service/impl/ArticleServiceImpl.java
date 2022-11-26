@@ -6,13 +6,21 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.blog.constant.Constant;
 import io.blog.ResponseResult;
 import io.blog.entity.Article;
+import io.blog.entity.Category;
+import io.blog.service.CategoryService;
+import io.blog.vo.ArticleDetailVo;
+import io.blog.vo.ArticleListVo;
 import io.blog.vo.HotArticleVo;
 import io.blog.mapper.ArticleMapper;
 import io.blog.service.ArticleService;
 import io.blog.utils.BeanCopyUtils;
+import io.blog.vo.PageVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
@@ -33,14 +41,44 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         List<Article> articles = page.getRecords();
 
-        // bean copy
-        // by var name
-        // List<HotArticleVo> vos = new ArrayList<HotArticleVo>();
-        // for(Article i : articles) {
-        //     vos.add(BeanCopyUtils.copyBean(i, HotArticleVo.class));
-        // }
-        ;
-
         return ResponseResult.okResult(BeanCopyUtils.copyBeanList(articles, HotArticleVo.class));
     }
+
+    @Override
+    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        // query in article by category_id
+        LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
+        // query when categoryId not null and is bigger than 0.
+        wrapper.eq(categoryId != null && categoryId > 0, Article::getCategoryId, categoryId);
+        wrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLISH);
+        wrapper.orderByDesc(Article::getIsTop);
+        // query by page
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        page(page, wrapper);
+        // vo
+        List<Article> articles = page.getRecords();
+        List<ArticleListVo> articleListVos = BeanCopyUtils.copyBeanList(articles, ArticleListVo.class);
+        // set category name
+        for(int i = 0; i < articleListVos.size(); ++i) {
+            // not need to use hash, but use service.getById
+            articleListVos.get(i).setCategoryName(categoryService.getById(articles.get(i).getCategoryId()).getName());
+        }
+        PageVo pageVo = new PageVo(articleListVos, page.getTotal());
+
+        return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult getArticleDetail(Long id) {
+        Article article = getById(id);
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copyBean(article, ArticleDetailVo.class);
+        Category category = categoryService.getById(article.getCategoryId());
+        if(category != null)
+            articleDetailVo.setCategoryName(category.getName());
+
+        return ResponseResult.okResult(articleDetailVo);
+    }
+
+    @Autowired
+    private CategoryService categoryService;
 }

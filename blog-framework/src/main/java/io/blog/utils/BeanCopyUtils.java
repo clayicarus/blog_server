@@ -22,10 +22,6 @@ public class BeanCopyUtils {
     }
     public static <T, U> List<T> copyBeanList(List<U> list, Class<T> class_)
     {
-        // List<T> res = new List<T>();
-        // for(U i : list) {
-        //     res.add(copyBean(i, class_));
-        // }
         List<T> res = list.stream().map((i) -> {
             return copyBean(i, class_);
         }).collect(Collectors.toList());
