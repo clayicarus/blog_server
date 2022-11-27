@@ -1,4 +1,4 @@
-package io.blog.config;
+package io.blog.utils;
 
 import org.springframework.web.context.request.RequestContextHolder;
 

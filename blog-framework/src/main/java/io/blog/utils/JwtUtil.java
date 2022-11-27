@@ -1,4 +1,4 @@
-package io.blog.config;
+package io.blog.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
