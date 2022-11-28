@@ -6,6 +6,7 @@ public enum AppHttpCodeEnum {
     SUCCESS(200,"操作成功"),
     // 登录
     NEED_LOGIN(401,"需要登录后操作"),
+    LOGIN_OUT_OF_DATE(402,"登陆过期"),
     NO_OPERATOR_AUTH(403,"无权限操作"),
     SYSTEM_ERROR(500,"出现错误"),
     USERNAME_EXIST(501,"用户名已存在"),
