@@ -1,9 +1,6 @@
 package io.blog.constant;
 
-import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
-import io.blog.entity.Article;
-
-public class Constant {
+public class ArticleTableConstant {
     public static final int ARTICLE_STATUS_DRAFT = 1;
     public static final int ARTICLE_STATUS_PUBLISH = 0;
 

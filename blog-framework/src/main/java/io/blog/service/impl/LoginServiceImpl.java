@@ -1,6 +1,7 @@
 package io.blog.service.impl;
 
 import io.blog.ResponseResult;
+import io.blog.constant.RedisConstant;
 import io.blog.entity.LoginUser;
 import io.blog.entity.User;
 import io.blog.service.LoginService;
@@ -33,7 +34,7 @@ public class LoginServiceImpl implements LoginService {
         String userId = loginUser.getUser().toString();
         String jwt = JwtUtil.createJWT(userId);
         // restore userinfo in redis
-        redisCache.setCacheObject("loginuser:" + userId, loginUser.getUser()); // loginUser is UserDetails
+        redisCache.setCacheObject(RedisConstant.GET_USER_BY_USERID + userId, loginUser.getUser()); // loginUser is UserDetails
         UserInfoVo userInfoVo = BeanCopyUtils.copyBean(loginUser, UserInfoVo.class);
         LoginUserVo vo = new LoginUserVo(jwt, userInfoVo);
 

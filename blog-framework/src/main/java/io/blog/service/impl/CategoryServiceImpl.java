@@ -3,7 +3,7 @@ package io.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.blog.ResponseResult;
-import io.blog.constant.Constant;
+import io.blog.constant.ArticleTableConstant;
 import io.blog.entity.Article;
 import io.blog.entity.Category;
 import io.blog.mapper.CategoryMapper;
@@ -30,13 +30,13 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     public ResponseResult getCategoryList() {
         // query article, which status publish
         LambdaQueryWrapper<Article> articleWrapper = new LambdaQueryWrapper<>();
-        articleWrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLISH);
+        articleWrapper.eq(Article::getStatus, ArticleTableConstant.ARTICLE_STATUS_PUBLISH);
         List<Article> articleList = articleService.list(articleWrapper);    // list by a wrapper
         // get unique category_id which exist in article
         Set<Long> exist_id = articleList.stream().map(Article::getCategoryId).collect(Collectors.toSet());
         // query category
         LambdaQueryWrapper<Category> categoryWrapper = new LambdaQueryWrapper<>();
-        categoryWrapper.eq(Category::getStatus, Constant.CATEGORY_STATUS_ENABLE);
+        categoryWrapper.eq(Category::getStatus, ArticleTableConstant.CATEGORY_STATUS_ENABLE);
         categoryWrapper.in(Category::getId, exist_id);
         List<Category> categories = list(categoryWrapper);
         // vo

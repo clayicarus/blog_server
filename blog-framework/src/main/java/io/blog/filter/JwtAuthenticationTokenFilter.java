@@ -2,6 +2,7 @@ package io.blog.filter;
 
 import com.alibaba.fastjson.JSON;
 import io.blog.ResponseResult;
+import io.blog.constant.RedisConstant;
 import io.blog.entity.LoginUser;
 import io.blog.entity.User;
 import io.blog.enums.AppHttpCodeEnum;
@@ -42,7 +43,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
         String userId = claims.getSubject();
-        User user = redisCache.getCacheObject("loginuser:" + userId);
+        User user = redisCache.getCacheObject(RedisConstant.GET_USER_BY_USERID + userId);
         if(user == null) {
             // login out of date
             // re-login

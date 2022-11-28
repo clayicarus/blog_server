@@ -3,7 +3,7 @@ package io.blog.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import io.blog.constant.Constant;
+import io.blog.constant.ArticleTableConstant;
 import io.blog.ResponseResult;
 import io.blog.entity.Article;
 import io.blog.entity.Category;
@@ -18,9 +18,7 @@ import io.blog.vo.PageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
@@ -30,7 +28,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // not need to care about logic delete, coz setting in application.yml
         // descend less than 10 articles
         // must formal articles, not need draft
-        queryWrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLISH); // use Article method to select
+        queryWrapper.eq(Article::getStatus, ArticleTableConstant.ARTICLE_STATUS_PUBLISH); // use Article method to select
         // order by view count
         queryWrapper.orderByDesc(Article::getViewCount);
         // search for 10 article
@@ -50,7 +48,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         LambdaQueryWrapper<Article> wrapper = new LambdaQueryWrapper<>();
         // query when categoryId not null and is bigger than 0.
         wrapper.eq(categoryId != null && categoryId > 0, Article::getCategoryId, categoryId);
-        wrapper.eq(Article::getStatus, Constant.ARTICLE_STATUS_PUBLISH);
+        wrapper.eq(Article::getStatus, ArticleTableConstant.ARTICLE_STATUS_PUBLISH);
         wrapper.orderByDesc(Article::getIsTop);
         // query by page
         Page<Article> page = new Page<>(pageNum, pageSize);
