@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
         log.error("Exception occur: {}", e.getMsg());
         return ResponseResult.errorResult(e.getCode(),e.getMsg());
     }
-    @ExceptionHandler(BlogException.class)
+    @ExceptionHandler(Exception.class)
     public ResponseResult exceptionHandler(Exception e){
         //打印异常信息
         log.error("Exception occur: {}",e);
