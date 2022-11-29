@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+// UserDetails in authentication
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

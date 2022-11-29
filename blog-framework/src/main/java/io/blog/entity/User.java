@@ -23,10 +23,10 @@ public class User  {
     private Long id;
 
     //用户名
-    @TableField("user_name")
+    @TableField("username")
     private String username;
     //昵称    
-    private String nickName;
+    private String nickname;
     //密码    
     private String password;
     //用户类型：0代表普通用户，1代表管理员    
@@ -36,9 +36,9 @@ public class User  {
     //邮箱    
     private String email;
     //手机号    
-    private String phonenumber;
+    private String phone;
     //用户性别（0男，1女，2未知）    
-    private String sex;
+    private String gender;
     //头像    
     private String avatar;
     //创建人的用户id    
