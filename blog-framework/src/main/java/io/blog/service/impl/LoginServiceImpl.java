@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
     public ResponseResult login(User user)
     {
         UsernamePasswordAuthenticationToken authenticationToken
-                = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
+                = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
         // pass token to authenticate
         Authentication authenticate = authenticationManager.authenticate(authenticationToken);
         // is authenticated?

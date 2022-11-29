@@ -2,11 +2,10 @@ package io.blog.entity;
 
 import java.util.Date;
 
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 /**
  * 用户表(User)表实体类
@@ -23,8 +22,9 @@ public class User  {
     //主键@TableId
     private Long id;
 
-    //用户名    
-    private String userName;
+    //用户名
+    @TableField("user_name")
+    private String username;
     //昵称    
     private String nickName;
     //密码    
