@@ -38,7 +38,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             e.printStackTrace();
             // token not valid
             // re-login
-            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN.getCode(), "Not valid token");
             WebUtils.renderString(response, JSON.toJSONString(result)); // rewrite response
             return;
         }
@@ -47,7 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // now use LoginUser
         LoginUser loginUser = redisCache.getCacheObject(RedisConstant.GET_USER_BY_USERID + userId);
         if(loginUser == null) {
-            // login out of date
+            // login out of date / logout
             // re-login
             ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_OUT_OF_DATE);
             WebUtils.renderString(response, JSON.toJSONString(result)); // rewrite response
