@@ -15,6 +15,10 @@ public class LoginController {
     {
         return loginService.login(user);
     }
+    @PostMapping("/logout")
+    public ResponseResult logout() {
+        return loginService.logout();
+    }
     @Autowired
     private LoginService loginService;
 }
