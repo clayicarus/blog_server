@@ -1,4 +1,4 @@
-package io.blog.vo;
+package io.blog.vo.user_vo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -10,5 +10,6 @@ public class UserInfoVo {
     private String email;
     private Long id;
     private String nickname;
+    // TODO: adjust front interface
     private String gender;
 }
