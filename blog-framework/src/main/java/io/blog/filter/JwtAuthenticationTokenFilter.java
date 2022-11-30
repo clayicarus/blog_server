@@ -49,7 +49,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         if(loginUser == null) {
             // login out of date / logout
             // re-login
-            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.LOGIN_OUT_OF_DATE);
+            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN.getCode(), "登陆已过期");
             WebUtils.renderString(response, JSON.toJSONString(result)); // rewrite response
             return;
         }
