@@ -39,7 +39,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         List<CommentVo> commentVoList = BeanCopyUtils.copyBeanList(page.getRecords(), CommentVo.class); // TODO: use lambda to for_each
         // get username by id in table sys_user
         for(CommentVo i : commentVoList) {
-            i.setUsername();
+
         }
 
         return ResponseResult.okResult(new PageVo(commentVoList, page.getTotal()));
