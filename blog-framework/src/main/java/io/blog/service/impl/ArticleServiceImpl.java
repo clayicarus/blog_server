@@ -59,7 +59,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // set category name
         for(int i = 0; i < articleListVos.size(); ++i) {
             // not need to use hash, but use service.getById
-            articleListVos.get(i).setCategoryName(categoryService.getById(articles.get(i).getCategoryId()).getName());
+            Long id = articles.get(i).getCategoryId();
+            articleListVos.get(i).setCategoryName(categoryService.getById(id).getName());
         }
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
 
