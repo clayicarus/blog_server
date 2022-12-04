@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.blog.ResponseResult;
 import io.blog.entity.Comment;
 import io.blog.entity.User;
+import io.blog.enums.AppHttpCodeEnum;
+import io.blog.exception.BlogException;
 import io.blog.mapper.CommentMapper;
 import io.blog.mapper.UserMapper;
 import io.blog.service.CommentService;
@@ -51,8 +53,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public ResponseResult addComment(Comment comment) {
-        comment.setCreateBy(SecurityUtils.getUserId());
-        save(comment);
+        if(comment.getContent() == null) {
+            throw(new BlogException(AppHttpCodeEnum.CONTENT_IS_NULL));
+        }
+        save(comment);      // mybatis plus method
         return ResponseResult.okResult();
     }
 
