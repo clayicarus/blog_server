@@ -24,3 +24,9 @@ mybatis-plus:
       logic-not-delete-value: 0
 #      主键自增
       id-type: auto
+
+huaweicloud-obs:
+  access-key: OIX7LCLPPYHRMYO7BLXZ
+  secret-key: zYrDnBlJWiZW8q9GpjWksZrMXXvf24yRBIPtTz2w
+  end-point: https://obs.cn-south-1.myhuaweicloud.com
+  bucket-name: clayicarus-blog

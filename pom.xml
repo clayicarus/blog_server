@@ -32,6 +32,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-configuration-processor</artifactId>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
             <!--fastjson依赖-->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -51,11 +56,17 @@
                 <version>3.4.3</version>
             </dependency>
 
-            <!--阿里云OSS-->
+            <!--obs-->
             <dependency>
-                <groupId>com.aliyun.oss</groupId>
-                <artifactId>aliyun-sdk-oss</artifactId>
-                <version>3.10.2</version>
+                <groupId>com.huaweicloud</groupId>
+                <artifactId>esdk-obs-java-bundle</artifactId>
+                <version>[3.21.11,)</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.huaweicloud</groupId>
+                <artifactId>esdk-obs-java-bundle</artifactId>
+                <version>[3.21.11,)</version>
             </dependency>
 
 
