@@ -1,4 +1,10 @@
-## 3.0 准备工作
+## 画饼
+
+- 修改jwt中的jwt_key，使得像自己的东西
+- redis的key如何设置？
+- avatar应该存储对象的名字，然后提供名字获取访问连接的接口
+
+## 准备工作
 
 - yml 文件，每个 application 都要对应一个 application.yml
 
@@ -32,7 +38,7 @@
   - @TableName
   - @TableId表示主键
 
-## 3.1 热门文章列表
+## 热门文章列表
 
 #### 文章表分析
 
@@ -92,7 +98,7 @@ java的枚举貌似可以对应一个对象
 
 status列，已发布是0。
 
-## 3.1 Bean拷贝工具类封装
+## Bean拷贝工具类封装
 
 #### copyBean
 
@@ -102,7 +108,7 @@ status列，已发布是0。
 
 将 LIst\<U\>转换为 List\<T\>。copyBeanList 方法直接返回 LIst\<T\>对象。
 
-## 3.2 分类列表
+## 分类列表
 
 #### 需求分析
 
@@ -122,7 +128,7 @@ category.sql
 - 再设置一个querywrapper，将存在于set中的，并且category启用的内容查询出来
 - 最后用vo筛选需要的数据
 
-## 3.3 按照分类列表查询文章列表
+## 按照分类列表查询文章列表
 
 #### 需求
 
@@ -178,7 +184,7 @@ fastjson比默认的json转换要快一点？
 
 在config里面配置json
 
-## 3.4 查询文章详情
+## 查询文章详情
 
 `GET /article/{id} `
 
@@ -193,7 +199,7 @@ fastjson比默认的json转换要快一点？
 - 需要获得分类名字
 - 查询可能为null
 
-## 3.6 登陆功能
+## 登陆功能
 
 | 请求方式 | 请求路径 |
 | -------- | -------- |
@@ -287,7 +293,7 @@ fastjson比默认的json转换要快一点？
 
 - login中，new一个token（token中包含用户名，密码）
 
-  然后调用authenticationManager的方法验证之，此后会返回authentication类的对象，对象中包含UserDetails对象，需要自己实现UserDetailsService，该service会返回UserDetails对象。
+  然后调用authenticationManager的方法验证之，此后会返回authentication类的对象，对象中包含UserDetails对象，需要自己实现UserDetailsService（原因是该方法会调用UserDetailsServiceImpl.loadUserByUsername，然后检查密码是否正确kana），该service会返回UserDetails对象。
 
 - 前后台查询同一张表
 
@@ -295,7 +301,7 @@ fastjson比默认的json转换要快一点？
 
 - 还需要实现UserDetails类，将其实现为LoginUser。
 
-- 回到LoginService中，调用authenticate时会调用UserDetailsServiceImpl类的loadUserByUsername
+- 回到LoginService中，调用authenticationManager.authenticate时会调用UserDetailsServiceImpl类的loadUserByUsername
 
   据用户名查询用户信息，使用UserMapper的select方法，抛出异常
 
@@ -309,7 +315,7 @@ fastjson比默认的json转换要快一点？
 
   加密，跨域
 
-### 3.6.1 登陆认证过滤器
+### 登陆认证过滤器
 
 过滤器的作用是拦截每一次请求，在请求里面获取必要的信息，经过拦截器后，请求最终会到达Controller层。
 
@@ -319,7 +325,7 @@ fastjson比默认的json转换要快一点？
 
 #### 流程
 
-获取token，解析token，从redis中获取用户信息，存入SecurityContextHolder
+获取token，解析token，从redis中获取用户信息，存入SecurityContextHolder，于是可以使用getContext获取用户信息。
 
 #### 新建filter包
 
@@ -332,7 +338,7 @@ fastjson比默认的json转换要快一点？
   - 解析可能失败（claims为空）
   - 需要重新登陆（响应一个需要登陆的错误）
 - 根据userId在redis里获取用户信息
-- 将authenticationToken存入SecurityContextHolder（上下文？why？）
+- 将authenticationToken存入SecurityContextHolder（可能每一次请求之间不会串线）
 - 调用filterChain.doFilter(request, response)，放行请求直接进入到Controller层
   - 若没有调用该方法，则会在filter中直接使用response响应请求，此时请求不会进入到Controller
 
@@ -350,7 +356,7 @@ http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
 http.antMatchers("/article/list").authenticated();
 ```
 
-### 3.6.2 认证异常处理
+### 认证异常处理
 
 认证失败在前后台的处理方式一致
 
@@ -360,11 +366,11 @@ framework中，handler.security.AuthenticationEntryPointImpl 实现Authenticatio
 - 没有携带token属于认证部分的异常处理，可以在EntryPoint中实现区分
   - 判断异常类型 instanceof，分别处理之
 
-## 3.7 统一异常
+## 统一异常
 
 BlogException继承RuntimeException
 
-## 3.8 退出登陆
+## 退出登陆
 
 | 请求方式 | 请求地址 | 请求头          |
 | -------- | -------- | --------------- |
@@ -390,7 +396,7 @@ FIXME：如果没有在头部设置token的话会抛出异常
 
 - 前台如果发现在携带token去logout时得到登陆过期的异常，应该直接回到未登陆状态
 
-## 3.9 评论查询接口
+## 评论查询接口
 
 ### 表分析
 
@@ -469,7 +475,7 @@ class CommentVo {
 - 查询的时候应该按照时间升序排序
 - 根据toCommentUserId查询回复给谁
 
-## 3.10 评论接口
+## 评论接口
 
 首次接受用户的数据并发送到数据库。
 
@@ -516,7 +522,7 @@ class CommentVo {
 
 - 某些条件下不能发评论，薏米挖干奶
 
-## 3.11 个人信息查询
+## 个人信息查询
 
 个人信息可以区分为展示给任何人的，以及只能展示给自己的？
 
@@ -533,12 +539,12 @@ class CommentVo {
 ```json
 {
 	"code":200,
-	"data":{
-		"avatar":"https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F3bf9c263bc0f2ac5c3a7feb9e218d07475573ec8.gi",
+	"data": { 
+		"avatar": "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fi0.hdslb.com%2Fbfs%2Farticle%2F3bf9c263bc0f2ac5c3a7feb9e218d07475573ec8.gi",
 		"email":"23412332@qq.com",
 		"id":"1",
-		"nickName":"sg333",
-		"sex":"1"
+		"nickname":"sg333",
+		"gender":"1"
 	},
 	"msg":"操作成功"
 }
@@ -550,7 +556,7 @@ class CommentVo {
 
 - 需要在SecurityConfig中限制userInfo的访问，使得必须带token
 
-## 3.12 头像上传
+## 头像上传
 
 ### 华为云obs的使用
 
@@ -585,9 +591,9 @@ public class ObsTest {
 
 ### 接口设计
 
-| 请求方式 | 请求地址 | 请求头    |
-| -------- | -------- | --------- |
-| POST     | /upload  | 需要token |
+| 请求方式 | 请求地址      | 请求头    |
+| -------- | ------------- | --------- |
+| POST     | /uploadAvatar | 需要token |
 
 参数：
 
@@ -612,7 +618,7 @@ public class ObsTest {
 - 注意文件类型判断
 - 先上传，再获取url
 
-## 3.13 用户信息更新
+## 用户信息更新
 
 ### 接口
 

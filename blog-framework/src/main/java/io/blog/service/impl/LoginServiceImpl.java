@@ -31,6 +31,7 @@ public class LoginServiceImpl implements LoginService {
             throw new RuntimeException("username or password not valid");
         }
         // transmit userId to token(jwt)
+        // UsernamePasswordAuthenticationToken.getPrincipal
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();  // any_cast
         // !!!not id wochao
         // String userId = loginUser.getUser().toString();

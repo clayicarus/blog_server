@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UploadController {
-    @PostMapping("/upload")
+    @PostMapping("/uploadAvatar")
     public ResponseResult uploadImg(MultipartFile img)
     {
         return uploadService.uploadImg(img);
