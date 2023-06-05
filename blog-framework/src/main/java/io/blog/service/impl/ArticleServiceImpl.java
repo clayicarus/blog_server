@@ -29,8 +29,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // descend less than 10 articles
         // must formal articles, not need draft
         queryWrapper.eq(Article::getStatus, ArticleTableConstant.ARTICLE_STATUS_PUBLISH); // use Article method to select
-        // order by view count
-        queryWrapper.orderByDesc(Article::getViewCount);
+        // order by visits
+        queryWrapper.orderByDesc(Article::getVisits);
         // search for 10 article
         Page<Article> page = new Page(1, 10);
 

@@ -291,9 +291,9 @@ fastjson比默认的json转换要快一点？
 
   注入会报错，需要在blog-main中定义SecurityConfig（与后台登陆不兼容），继承WebSecurityConfigurerAdapter，在配置类里注入authenticationManager。在config中override某个方法就可以转换为Bean，重写后加入@Bean注解。
 
-- login中，new一个token（token中包含用户名，密码）
+- AuthenticationManager的配置在SecurityConfig，调用authenticate时会使用passwordEncoder来判断密码是否正确。
 
-  然后调用authenticationManager的方法验证之，此后会返回authentication类的对象，对象中包含UserDetails对象，需要自己实现UserDetailsService（原因是该方法会调用UserDetailsServiceImpl.loadUserByUsername，然后检查密码是否正确kana），该service会返回UserDetails对象。
+- 然后调用authenticationManager的方法验证之，此后会返回authentication类的对象，对象中包含UserDetails对象，需要自己实现UserDetailsService（原因是该方法会调用UserDetailsServiceImpl.loadUserByUsername，然后检查密码是否正确kana），该service会返回UserDetails对象。
 
 - 前后台查询同一张表
 
@@ -309,15 +309,17 @@ fastjson比默认的json转换要快一点？
 
 - 在LoginService中判断authenticate是否为空（验证失败）
 
-  不为空，用户信息（loginUser）存入redis（redis中设置过期）中（"loginuser:" + userId为key），封装token（jwt）和userInfo返回给前台
+  不为空，用户信息（loginUser）存入redis（redis中设置过期）中（"loginuser:" + userId为key），封装token（jwt，jwt中的Subject是UserId的字符串）返回给前台，token可以在下次用到时解析为userid的字符串。
 
 - 再配置securityConfig
 
+  密码使用BCryptPasswordEncoder加密，猜测authenticate方法是通过这个来判断密码是否正确。
+  
   加密，跨域
 
 ### 登陆认证过滤器
 
-过滤器的作用是拦截每一次请求，在请求里面获取必要的信息，经过拦截器后，请求最终会到达Controller层。
+过滤器的作用是拦截每一次请求，在请求里面获取必要的信息（从请求体的token提取出userid，用userid从redis里取出登陆状态（登陆的话能取出LoginUser）放在SecurityContextHolder的context里），经过拦截器后，请求最终会到达Controller层。
 
 前后台登陆认证操作不一样，放到main中。
 

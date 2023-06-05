@@ -1,5 +1,7 @@
 package io.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,19 +26,20 @@ public class Article {
     //文章内容
     private String content;
     //文章摘要
-    private String summary;
+    @TableField("abstract")
+    private String articleAbstract;
     //所属分类id
     private Long categoryId;
     //缩略图
     private String thumbnail;
     //是否置顶（0否，1是）
-    private String isTop;
+    private Integer isTop;
     //状态（0已发布，1草稿）
-    private String status;
+    private Integer status;
     //访问量
-    private Long viewCount;
+    private Long visits;
     //是否允许评论 1是，0否
-    private String isComment;
+    private Integer allowComment;
     
     private Long createBy;
     
@@ -46,6 +49,6 @@ public class Article {
     
     private Date updateTime;
     //删除标志（0代表未删除，1代表已删除）
-    private Integer delFlag;
+    private Integer deleted;
 }
 

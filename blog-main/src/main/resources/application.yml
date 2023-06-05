@@ -1,12 +1,10 @@
 server:
-  port: 7777
+  port: 8752
 spring:
 #  数据库
   datasource:
-    url: jdbc:mysql://localhost:3306/blog?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
-    username: root
-    password: Abc123456!
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:/home/clay/Projects/new_blog/blog.db
   servlet:
     multipart:
       max-file-size: 2MB
@@ -17,8 +15,8 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
-#      逻辑删除字段，名字叫delFlag
-      logic-delete-field: delFlag
+#      逻辑删除字段
+      logic-delete-field: deleted
 #      删除的值为1
       logic-delete-value: 1
       logic-not-delete-value: 0

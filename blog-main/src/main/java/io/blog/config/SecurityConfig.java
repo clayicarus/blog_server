@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/login").anonymous()
-                .antMatchers("/article/list").authenticated()
+                // .antMatchers("/article/list").authenticated()
                 .antMatchers("/logout").authenticated()
                 .antMatchers("/user").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.logout().disable();
         // set jwtFilter
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-
-        http.logout().disable();
+        //
+        // http.logout().disable();
         //允许跨域
         http.cors();
     }

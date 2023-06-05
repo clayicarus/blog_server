@@ -1,19 +1,18 @@
-USE `blog`;
+-- USE `blog`;
 
 DROP TABLE IF EXISTS `category`;
 
 CREATE TABLE `category` (
-                               `id` bigint(200) NOT NULL AUTO_INCREMENT,
-                               `name` varchar(128) DEFAULT NULL COMMENT '分类名',
-                               `pid` bigint(200) DEFAULT '-1' COMMENT '父分类id，如果没有父分类为-1',
-                               `description` varchar(512) DEFAULT NULL COMMENT '描述',
-                               `status` char(1) DEFAULT '0' COMMENT '状态0:正常,1禁用',
-                               `create_by` bigint(200) DEFAULT NULL,
-                               `create_time` datetime DEFAULT NULL,
-                               `update_by` bigint(200) DEFAULT NULL,
-                               `update_time` datetime DEFAULT NULL,
-                               `del_flag` int(11) DEFAULT '0' COMMENT '删除标志（0代表未删除，1代表已删除）',
-                               PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COMMENT='分类表';
+    `id` integer primary key autoincrement,
+    `name` varchar(128) DEFAULT NULL,           -- category name
+    `parent_category` integer DEFAULT -1,       -- parent category id
+    `description` varchar(512) DEFAULT NULL,    -- description
+    `status` integer DEFAULT 0,                 -- 0 is on use, 1 is forbidden
+    `create_by` integer DEFAULT NULL,           -- create user id
+    `create_time` bigint DEFAULT NULL,          -- create time stamp
+    `update_by` integer DEFAULT NULL,           -- update user id
+    `update_time` bigint DEFAULT NULL,          -- update time stamp
+    `deleted` integer DEFAULT 0                 -- 0 is deleted, 1 not deleted
+);
 
-insert  into `category`(`id`,`name`,`pid`,`description`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`del_flag`) values (1,'java',-1,'wsd','0',NULL,NULL,NULL,NULL,0),(2,'PHP',-1,'wsd','0',NULL,NULL,NULL,NULL,0);
+insert  into `category`(`id`,`name`,`parent_category`,`description`,`status`,`create_by`,`create_time`,`update_by`,`update_time`,`deleted`) values (1,'java',-1,'wsd','0',NULL,NULL,NULL,NULL,0),(2,'PHP',-1,'wsd','0',NULL,NULL,NULL,NULL,0);

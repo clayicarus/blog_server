@@ -11,5 +11,5 @@ public class UserInfoVo {
     private Long id;
     private String nickname;
     // TODO: adjust front interface
-    private String gender;
+    private Integer gender;
 }

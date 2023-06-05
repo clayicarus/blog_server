@@ -69,13 +69,6 @@
                 <version>[3.21.11,)</version>
             </dependency>
 
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>easyexcel</artifactId>
-                <version>3.0.5</version>
-            </dependency>
-
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
